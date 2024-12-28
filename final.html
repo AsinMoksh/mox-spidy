@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequential Image Background Proposal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #ffffff;
+            background-size: cover;
+            background-position: top left;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            transition: background 0.5s ease-in-out;
+        }
+
+        h1 {
+            color: #a2d4f5;
+            text-shadow: 2px 2px 4px rgba(47, 95, 107, 0.7);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            color: #fff;
+            transition: background 0.3s ease;
+        }
+
+        .yes-button {
+            background-color: #28a745;
+        }
+
+        .yes-button:hover {
+            background-color: #218838;
+        }
+
+        .no-button {
+            background-color: #dc3545;
+        }
+
+        .no-button:hover {
+            background-color: #c82333;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            display: none;
+            z-index: 1001;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>lets go on pizza date?</h1>
+    <div>
+        <button class="yes-button" onclick="sayYes()">Yes</button>
+        <button class="no-button" onclick="showFirstPopup()">No</button>
+    </div>
+
+    <!-- Pop-ups -->
+    <div class="popup" id="popup-1">
+        <p>did u just said no? i ask u again wanna come?</p>
+        <button class="yes-button" onclick="sayYes()">Yes i will</button>
+        <button class="no-button" onclick="showSecondPopup()">No i won't</button>
+    </div>
+
+    <div class="popup" id="popup-2">
+        <p>huh how can u say no to me? now u are coming with me </p>
+        <button class="yes-button" onclick="sayYes()">Yes i am</button>
+        <button class="no-button" onclick="showThirdPopup()">no i am not </button>
+    </div>
+
+    <div class="popup" id="popup-3">
+        <p>haw pls come with me on pizza date T_T </p>
+        <button class="yes-button" onclick="showFourthPopup()">okayy yess i am coming</button>
+    </div>
+     <!-- New Extra Popup -->
+    <div class="popup" id="popup-4">
+        <p>yay u are such cutie ! iknew it no one can say no to spidy like me</p>
+        <button class="yes-button" onclick="sayYes()">Yeah my spidy</button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Array of images (Update paths for actual use)
+        const imageList = [
+            'https://i.pinimg.com/474x/16/b7/42/16b742f12dffc6812326cc87193e3631.jpg',
+            'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQnned8RdKyjzSK5ejLPKbLTRGlIGlyng4EWlhliT-IWlS0z5KG',
+            'https://imgcdn.sigstick.com/zkiXdYw82ZXoXGLbbUPx/4-1.png',
+            'https://i.pinimg.com/736x/a6/b0/7d/a6b07d14bad39a2e509c964eea07dd8d.jpg',
+            'https://i.pinimg.com/736x/3e/d6/d3/3ed6d33a3994c798c69d81e151aa26ab.jpg'
+        ];
+
+        let currentImageIndex = 0;
+
+        // Function to set the next image as the background with size and position controls
+        function setNextBackground() {
+            document.body.style.backgroundImage = `url(${imageList[currentImageIndex]})`;
+            document.body.style.backgroundSize = '20% 30% ';
+            document.body.style.backgroundPosition = 'center top';
+            currentImageIndex = (currentImageIndex + 1) % imageList.length;
+        }
+
+        // Show popups in sequence and update the background
+        function showPopup(popupId) {
+            setNextBackground();
+            document.querySelectorAll('.popup').forEach(popup => popup.style.display = 'none');
+            document.getElementById(popupId).style.display = 'block';
+        }
+
+        function showFirstPopup() {
+            showPopup('popup-1');
+        }
+
+        function showSecondPopup() {
+            showPopup('popup-2');
+        }
+
+        function showThirdPopup() {
+            showPopup('popup-3');
+        }
+
+        function showFourthPopup() {
+            showPopup('popup-4');
+        }
+
+        // When user says Yes
+        function sayYes() {
+            alert("Yay! You said Yes!");
+            document.querySelectorAll('.popup').forEach(popup => popup.style.display = 'none');
+            document.body.style.backgroundImage = 'url("https://i.pinimg.com/736x/3e/d6/d3/3ed6d33a3994c798c69d81e151aa26ab.jpg")'; // Final celebration image
+            document.body.style.backgroundSize = 'contain';
+            document.body.style.backgroundPosition = 'center';
+        }
+
+        // On page load, show the first image
+        window.onload = setNextBackground;
+    </script>
+</body>
+</html>
